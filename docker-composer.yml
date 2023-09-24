@@ -1,0 +1,31 @@
+version: "3"
+services:
+ postgres:
+  image: postgres
+  container_name: db
+  restart: always
+  environment:
+   POSTGRES_DB: ${POSTGRES_DB}
+   POSTGRES_USER: ${POSTGRES_USER}
+   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  ports:
+   - "2345:5432"
+  volumes:
+   - postgres-data:/var/lib/postgresql/data
+
+ cakephp:
+  build:
+   context: .
+   dockerfile: Dockerfile
+  container_name: cakephp-container
+  ports:
+   - "8080:80"
+  depends_on:
+   - postgres
+  environment:
+   DATABASE_URL: postgres://abie:123456@postgres:5432/cake-blog
+   DEBUG: true
+   SECURITY_SALT: saltpassword
+
+volumes:
+ postgres-data:
