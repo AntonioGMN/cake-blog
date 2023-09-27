@@ -10,16 +10,7 @@ RUN apt-get update && apt-get install -y \
 RUN a2enmod rewrite
 RUN service apache2 restart
 
-# Copie sua aplicação CakePHP para o diretório do servidor web
-COPY cake/ /var/www/html/
-
-# Defina as variáveis de ambiente para o CakePHP (ajuste conforme necessário)
-ENV DEBUG true
-ENV DATABASE_URL postgres://abie:123456@postgres:5432/cake-blog
-ENV SECURITY_SALT saltpassword
-
-# Exponha a porta 80
-EXPOSE 80
+RUN chmod -R 777 /var/www/html
 
 # Comando para iniciar o Apache (você pode personalizar isso conforme necessário)
 CMD ["apache2-foreground"]

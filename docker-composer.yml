@@ -22,10 +22,12 @@ services:
    - "8080:80"
   depends_on:
    - postgres
-  environment:
-   DATABASE_URL: postgres://abie:123456@postgres:5432/cake-blog
-   DEBUG: true
-   SECURITY_SALT: saltpassword
+  env_file:
+   - .env
+  volumes:
+   - ./cake:/var/www/html
+  user: "root:root"
 
 volumes:
  postgres-data:
+ cake-volume:
